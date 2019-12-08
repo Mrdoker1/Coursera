@@ -1,46 +1,32 @@
-/**
- * @param {Array} collection
- * @params {Function[]} – Функции для запроса
- * @returns {Array}
- */
 
- 
- //Выполняет запрос к коллекции. Принимает коллекцию и операции. Возвращает коллекцию после применения всех операций. В качестве операций может быть использован 'filterIn', 'select'.
- //lib.query(collection, operation1, operation2, ...);
-
-function query(collection) {
+function query(collection, ...operations) {
     let new_collection = collection;
 
-}
 
 
+    for (let operation of operations){
+        let selectCollection = new Set,
+        filterCollection = new Map,
+        out = [];
 
-/**
- * @params {String[]}
- */
+        if (operation[0] == 'select') 
+        selectCollection.add(operation.slice(1));
+        }
+    
+    console.log(select[0]);
 
-//Позволяет выбрать определённые поля объектов коллекции. Принимает список полей.
-//lib.select('fieldName1', 'fieldName2', ...);
-function select() {
 
-}
-
-/**
- * @param {String} property – Свойство для фильтрации
- * @param {Array} values – Массив разрешённых значений
- */
-
-//Позволяет отфильтровать коллекцию. Принимает название поля и допустимые значения. После выполнения фильтрации должны остаться объекты, у которых поле имеет одно из допустимых значений.
-//lib.filterIn('fieldName', ['acceptedValue1', 'acceptedValue2', ...]);
-function filterIn(property, values) {
+    return new_collection;
 
 }
 
-module.exports = {
-    query: query,
-    select: select,
-    filterIn: filterIn
-};
+function select(...props){
+    return ["select",...props];
+}
+
+function filterIn(prop, values){
+    return ["filter", prop, ...values];
+}
 
 
 var friends = [
@@ -87,6 +73,18 @@ var friends = [
         favoriteFruit: 'Картофель'
     }
 ];
+
+
+query(friends, select('name', 'gender', 'email'),
+filterIn('favoriteFruit', ['Яблоко', 'Картофель']));
+
+/*
+module.exports = {
+    query: query,
+    select: select,
+    filterIn: filterIn
+};
+*/
 
 /*
 var result = lib.query(

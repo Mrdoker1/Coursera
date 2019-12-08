@@ -9,7 +9,7 @@
  //lib.query(collection, operation1, operation2, ...);
 
 function query(collection) {
-    
+    let new_collection = collection;
 
 }
 
